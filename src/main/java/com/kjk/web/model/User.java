@@ -31,5 +31,9 @@ public class User extends BaseEntity {
     @Column(length = 50)
     private String username;
 
+    @Column
+    private String address;
 
+    @Column(length = 12)
+    private String telNo;
 }

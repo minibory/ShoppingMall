@@ -23,10 +23,14 @@ public class QUser extends EntityPathBase<User> {
 
     public final BooleanPath active = createBoolean("active");
 
+    public final StringPath address = createString("address");
+
     //inherited
     public final NumberPath<Long> id = _super.id;
 
     public final StringPath password = createString("password");
+
+    public final StringPath telNo = createString("telNo");
 
     public final StringPath userId = createString("userId");
 
