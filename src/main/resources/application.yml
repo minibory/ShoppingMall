@@ -1,0 +1,27 @@
+spring:
+  # h2 DB 설정
+  datasource:
+    url: jdbc:mysql://localhost:3306/kjk_db?serverTimezone=UTC&characterEncoding=UTF-8
+    username: root
+    password: blue0423
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  # jpa 설정
+  jpa:
+    database: mysql
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        format_sql: true
+    show-sql: true
+
+  # devtools 설정
+  devtools:
+    livereload:
+      enabled: true
+    freemarker:
+      cache: false
+
+logging.level:
+  org.hibernate.SQL: debug
