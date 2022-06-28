@@ -18,10 +18,15 @@ spring:
 
   # devtools 설정
   devtools:
+    restart:
+      enabled: true
     livereload:
       enabled: true
-    freemarker:
-      cache: false
+
+  thymeleaf:
+    mode: HTML5
+    cache: false
+    prefix: file:src/main/resources/templates/
 
 logging.level:
   org.hibernate.SQL: debug
