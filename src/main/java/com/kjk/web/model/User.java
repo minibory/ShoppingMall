@@ -5,10 +5,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.SequenceGenerator;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @SequenceGenerator(name = "SeqGenerator", sequenceName = "SEQ_USER_ID", allocationSize = 1)
@@ -36,4 +35,8 @@ public class User extends BaseEntity {
 
     @Column(length = 12)
     private String telNo;
+
+    @OneToMany
+    @JoinColumn(name = "USER_ID")
+    private List<Product> products = new ArrayList<>();
 }
