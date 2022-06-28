@@ -41,7 +41,7 @@ public class Product extends BaseEntity {
     private int productSalePrice;
 
     // 상품 소유자
-    @ManyToOne
-    @JoinColumn(name = "user_id", insertable = false, updatable = false)
-    private User user;
+//    @ManyToOne
+//    @JoinColumn(name = "USER_ID")
+//    private User user;
 }

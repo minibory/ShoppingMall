@@ -1,11 +1,11 @@
 package com.kjk.web.model;
 
-import com.kjk.web.model.generic.BaseEntity;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,11 +15,16 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
-public class User extends BaseEntity {
-    private static final long serialVersionUID = -3678759275406100254L;
+public class User implements Serializable {
+    private static final long serialVersionUID = -6829693587200493915L;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "USER_ID")
+    private Long Id;
 
     @Column(length = 100, unique = true, nullable = false)
-    private String userId;
+    private String loginId;
 
     @Column
     private String password;
@@ -36,7 +41,6 @@ public class User extends BaseEntity {
     @Column(length = 12)
     private String telNo;
 
-    @OneToMany
-    @JoinColumn(name = "USER_ID")
-    private List<Product> products = new ArrayList<>();
+//    @OneToMany(cascade = CascadeType.ALL)
+//    private List<Product> products = new ArrayList<>();
 }

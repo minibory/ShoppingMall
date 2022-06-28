@@ -27,18 +27,13 @@ dependencies {
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     implementation 'org.springframework.boot:spring-boot-devtools'
     implementation 'org.springframework.boot:spring-boot-starter-web'
-    // JPA
+    implementation group: 'org.webjars', name: 'jquery', version: '3.6.0'
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-    // ThymeLeaf
     implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
-    // MySQL
     runtimeOnly 'mysql:mysql-connector-java'
-    // Spring Security
 //    implementation 'org.springframework.boot:spring-boot-starter-security'
 //    implementation 'org.springframework.security:spring-security-test'
-    // lombok
     implementation 'org.projectlombok:lombok'
-    // Querydsl
     implementation "com.querydsl:querydsl-jpa:${queryDslVersion}"
     implementation "com.querydsl:querydsl-apt:${queryDslVersion}"
     // Querydsl JPAAnnotationProcessor 사용 지정
