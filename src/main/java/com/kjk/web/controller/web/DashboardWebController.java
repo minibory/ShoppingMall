@@ -11,6 +11,10 @@ public class DashboardWebController {
 
     @GetMapping
     public String getDashboard() {
-        return "itemList";
+        // 로그인 상태 시 상품목록화면으로
+        if(false) {
+            return "redirect:/itemList";
+        }
+        return "login";
     }
 }

@@ -41,6 +41,6 @@ public class User implements Serializable {
     @Column(length = 12)
     private String telNo;
 
-//    @OneToMany(cascade = CascadeType.ALL)
-//    private List<Product> products = new ArrayList<>();
+    @OneToMany
+    private List<Product> products = new ArrayList<>();
 }
