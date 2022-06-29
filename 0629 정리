@@ -13,3 +13,5 @@
 ※ 상품 등록 페이지 필요
 
 ※ 상품 수정 페이지 필요
+
+※ DashboardContoller가 아닌 security 설정으로 최초페이지를 /login으로 설정 필요
