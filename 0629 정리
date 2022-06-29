@@ -1,0 +1,17 @@
+/ or /login - 최초 페이지/로그인 페이지, 이미 로그인된 상태면 /menu/product로 이동.
+
+/join - 회원가입 페이지, 로그인 화면에서 접근.
+
+/logout - X, 로그아웃 후 /login(로그인 페이지)로 이동.
+
+/menu/product(/menu/product/all) - 모든 상품 페이지(itemList), 모든 회원의 상품 목록.
+
+/menu/product/sale - 세일 상품 페이지(itemList), 세일 상품 목록.
+
+/menu/product/my - 내 상품 페이지(미정)
+
+※ 상품 등록 페이지 필요
+
+※ 상품 수정 페이지 필요
+
+※ DashboardContoller가 아닌 security 설정으로 최초페이지를 /login으로 설정 필요
