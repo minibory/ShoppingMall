@@ -30,9 +30,17 @@ dependencies {
     implementation group: 'org.webjars', name: 'jquery', version: '3.6.0'
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
-    runtimeOnly 'mysql:mysql-connector-java'
+
+    //mysql-> mariadb
+//    runtimeOnly 'mysql:mysql-connector-java'
+    implementation group: 'org.mariadb.jdbc', name: 'mariadb-java-client', version: '3.0.5'
+
 //    implementation 'org.springframework.boot:spring-boot-starter-security'
 //    implementation 'org.springframework.security:spring-security-test'
+
+    //jdbc url encrypt
+    implementation group: 'com.github.ulisesbocchio', name: 'jasypt-spring-boot-starter', version: '3.0.3'
+
     implementation 'org.projectlombok:lombok'
     implementation "com.querydsl:querydsl-jpa:${queryDslVersion}"
     implementation "com.querydsl:querydsl-apt:${queryDslVersion}"

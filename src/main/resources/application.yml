@@ -1,11 +1,17 @@
 spring:
   # h2 DB 설정
+  # username : root -> kjk_db   create user 필요
+#  CREATE USER 'kjk_db'@'localhost' IDENTIFIED BY 'blue0423';
+#  GRANT ALL PRIVILEGES ON kjk_db.* TO 'kjk_db'@'localhost'; 만들고 삭제
+  #Jasypt암호화
   datasource:
-    url: jdbc:mysql://localhost:3306/kjk_db?serverTimezone=UTC&characterEncoding=UTF-8
-    username: root
-    password: blue0423
-    driver-class-name: com.mysql.cj.jdbc.Driver
-
+#    url: jdbc:mariadb://localhost:3306/kjk_db?serverTimezone=UTC&characterEncoding=UTF-8
+#    username: kjk_db
+#    password: blue0423
+    url: ENC(JR7de8kI38KKyX/3YQY6a/0Se0ZMcjyg8D+mQF1tLCb6TR8AJmNYF27z6sm2hvLZBgrrQjO7MYgjhypygeM+xfSTeP+lQZ2TT8BNH4dKISkAEpbW8UMdeA==)
+    username: ENC(YNzp2RJUoKmYSAATgWrH9w==)
+    password: ENC(mR+TghZnvrX8aj5KyWJ5FU5wMAo/K4gs)
+    driver-class-name: org.mariadb.jdbc.Driver
   # jpa 설정
   jpa:
     database: mysql
