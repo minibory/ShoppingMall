@@ -13,9 +13,9 @@ import java.util.List;
 public class UserRepository {
     private final JPAQueryFactory queryFactory;
 
-    public List<User> findById(String id) {
+    public List<User> findById(String loginId) {
         return queryFactory.selectFrom(user)
-                .where(user.loginId.eq(id))
+                .where(user.loginId.eq(loginId))
                 .fetch();
     }
 }
