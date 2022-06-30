@@ -4,7 +4,7 @@ buildscript {
     }
 }
 plugins {
-    id 'org.springframework.boot' version '2.7.1'
+    id 'org.springframework.boot' version '2.6.8'
     id 'io.spring.dependency-management' version '1.0.11.RELEASE'
     id 'java'
 }
@@ -41,7 +41,8 @@ dependencies {
     //jdbc url encrypt
     implementation group: 'com.github.ulisesbocchio', name: 'jasypt-spring-boot-starter', version: '3.0.3'
 
-    implementation 'org.projectlombok:lombok'
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
     implementation "com.querydsl:querydsl-jpa:${queryDslVersion}"
     implementation "com.querydsl:querydsl-apt:${queryDslVersion}"
     // Querydsl JPAAnnotationProcessor 사용 지정

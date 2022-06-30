@@ -14,10 +14,10 @@ import java.util.List;
 @Repository
 @RequiredArgsConstructor
 public class UserRepository {
-    private final JPAQueryFactory queryFactory;
+    private final JPAQueryFactory jpaQueryFactory;
 
     public List<User> findById(String loginId) {
-        return queryFactory
+        return jpaQueryFactory
                 .selectFrom(user)
                 .where(eqLoginId(loginId))
                 .fetch();

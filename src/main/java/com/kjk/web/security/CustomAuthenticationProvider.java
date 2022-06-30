@@ -3,7 +3,9 @@ package com.kjk.web.security;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.stereotype.Component;
 
+@Component
 public class CustomAuthenticationProvider implements AuthenticationProvider {
 
     @Override
