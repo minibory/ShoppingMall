@@ -7,6 +7,7 @@ import lombok.Setter;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 @Entity
@@ -43,4 +44,7 @@ public class User implements Serializable {
 
     @OneToMany
     private List<Product> products = new ArrayList<>();
+
+    @Transient
+    private String auth;
 }
