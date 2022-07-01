@@ -10,11 +10,11 @@
             <h2>Join</h2>
         </div>
         <!-- Join Form -->
-        <form>
+        <form method="post" th:action="@{/join}">
             <div class="input-label">이름</div>
-            <input type="text" id="name" name="name">
+            <input type="text" id="username" name="nickname">
             <div class="input-label">아이디</div>
-            <input type="text" id="id" name="id">
+            <input type="text" id="id" name="username">
             <div class="input-label">비밀번호</div>
             <input type="text" id="password" name="password">
             <div class="input-label">비밀번호 확인</div>
@@ -24,7 +24,7 @@
 
         <!-- Remind Passowrd -->
         <div id="formFooter">
-            Already have an account? <a class="login-label" href="/">Sign In</a>
+            Already have an account? <a class="login-label" th:href="@{/login}">Sign In</a>
         </div>
 
     </div>

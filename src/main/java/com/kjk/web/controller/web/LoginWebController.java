@@ -1,11 +1,17 @@
 package com.kjk.web.controller.web;
 
+import com.kjk.web.Repository.UserRepository;
+import com.kjk.web.model.User;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
+@RequiredArgsConstructor
 public class LoginWebController {
+
+    private final UserRepository userRepository;
 
     // 로그인 페이지
     @GetMapping("/login")
@@ -14,19 +20,25 @@ public class LoginWebController {
         if(false) {
             return "redirect:/menu/product";
         }
-        return "login";
+        return "account/login";
     }
 
     // 회원가입 페이지
     @GetMapping("/join")
     public String join() {
-        return "join";
+        return "account/join";
+    }
+
+    @PostMapping("/join")
+    public String register(User user) {
+        userRepository.save(user);
+        return"redirect:/";
     }
 
     // 로그아웃
     @PostMapping("/logout")
     public String logout() {
         // 세션 만료
-        return "/login";
+        return "account/login";
     }
 }

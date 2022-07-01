@@ -12,5 +12,6 @@ public class AuthenticationSuccessHandler implements org.springframework.securit
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
         System.out.println("onAuthenticationSuccess!!!");
+
     }
 }

@@ -1,9 +1,7 @@
 package com.kjk.web.config;
 
 import com.kjk.web.Handler.AuthenticationFailureHandler;
-import com.kjk.web.Handler.AuthenticationSuccessHandler;
 import com.kjk.web.security.CustomAuthenticationProvider;
-import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -12,6 +10,7 @@ import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
 @EnableWebSecurity
@@ -33,13 +32,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/", "/menu/product", "/menu/product/all", "/login").permitAll()
+                .antMatchers("/", "/menu/product", "/menu/product/all", "/login", "/join").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
                 .loginPage("/login")
-                .defaultSuccessUrl("/menu/product")
-                .successHandler(new AuthenticationSuccessHandler())
+                //로그인 후 기본화면으로 돌아가기. successHandler 주석필요
+                .defaultSuccessUrl("/")
+//                .successHandler(new AuthenticationSuccessHandler())
                 .failureHandler(new AuthenticationFailureHandler())
                 .permitAll();
 
@@ -60,7 +60,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Bean
-    public BCryptPasswordEncoder passwordEncoder() {
+    public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 }

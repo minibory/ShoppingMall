@@ -25,7 +25,7 @@ public class User implements Serializable {
     private Long Id;
 
     @Column(length = 100, unique = true, nullable = false)
-    private String loginId;
+    private String username;
 
     @Column
     private String password;
@@ -34,7 +34,7 @@ public class User implements Serializable {
     private boolean active = true;
 
     @Column(length = 50)
-    private String username;
+    private String nickname;
 
     @Column
     private String address;

@@ -1,8 +1,9 @@
 <!DOCTYPE html>
-<script src="js/jquery-3.6.0.min.js"></script>
+<script src="js/jquery-3.6.0.min.js" xmlns:sec="http://www.w3.org/1999/xhtml"></script>
 <script src="js/jquery-ui.min.js"></script>
 <link rel="stylesheet" href="css/index.css">
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">>
     <head th:fragment="head(title)">
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
@@ -15,7 +16,7 @@
         <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
         <!-- Core theme CSS (includes Bootstrap)-->
         <link href="css/styles.css" rel="stylesheet" />
-        <title th:text=${title}></title>
+        <title th:text="${title}"></title>
     </head>
     <body th:fragment="menu(menu)">
         <!-- Navigation-->
@@ -34,7 +35,8 @@
                             </ul>
                         </li>
                     </ul>
-                    <a style="color: rgba(0,0,0,0.9)" class="nav-item nav-link active" aria-current="page" id="logoutBtn">Logout</a>
+                    <a style="color: rgba(0,0,0,0.9)" class="nav-item nav-link active" aria-current="page" id="logInBtn" sec:authorize="!isAuthenticated()" th:text="LogIn">LogIn</a>
+                    <a style="color: rgba(0,0,0,0.9)" class="nav-item nav-link active" aria-current="page" id="logoutBtn" sec:authorize="isAuthenticated()" th:text="Logout">Logout</a>
                     <a style="color: rgba(0,0,0,0.9)" class="nav-item nav-link active" aria-current="page" id="myProducts">My Products</a>
                     <form class="d-flex">
                         <button class="btn btn-outline-dark" type="submit">
@@ -55,6 +57,9 @@
             });
 
             function initSetting() {
+                $("#logInBtn").click(function () {
+                    window.location = "/login";
+                });
                 $("#logoutBtn").click(function () {
                     window.location = "/logout";
                 });
