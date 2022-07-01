@@ -1,6 +1,5 @@
 package com.kjk.web.security;
 
-import com.kjk.web.Repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -30,8 +29,9 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
         if (user == null) {
             throw new BadCredentialsException("username is not found. username=" + username);
         }
+        PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
-        if (!matchPassword(password,user.getPassword())) {
+        if (!passwordEncoder.matches(password, user.getPassword())) {
             throw new BadCredentialsException(username);
         }
 
@@ -46,8 +46,5 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
         return authentication.equals(UsernamePasswordAuthenticationToken.class);
     }
 
-    private boolean matchPassword(String loginPwd, String password) {
-        return loginPwd.equals(password);
-    }
 
 }

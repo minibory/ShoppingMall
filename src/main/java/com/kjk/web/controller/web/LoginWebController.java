@@ -2,6 +2,7 @@ package com.kjk.web.controller.web;
 
 import com.kjk.web.Repository.UserRepository;
 import com.kjk.web.model.User;
+import com.kjk.web.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,7 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 @RequiredArgsConstructor
 public class LoginWebController {
 
-    private final UserRepository userRepository;
+    private final UserService userService;
 
     // 로그인 페이지
     @GetMapping("/login")
@@ -31,7 +32,7 @@ public class LoginWebController {
 
     @PostMapping("/join")
     public String register(User user) {
-        userRepository.save(user);
+        userService.save(user);
         return"redirect:/";
     }
 

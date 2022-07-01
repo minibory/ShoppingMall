@@ -45,6 +45,14 @@ public class User implements Serializable {
     @OneToMany
     private List<Product> products = new ArrayList<>();
 
-    @Transient
-    private String auth;
+//    @Transient
+//    private String auth;
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinTable(
+            name = "tbl_user_role",
+            joinColumns = @JoinColumn(name = "USER_ID"),
+            inverseJoinColumns = @JoinColumn(name = "ROLE_ID"))
+    private Role role = new Role();
+
 }
