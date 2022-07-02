@@ -1,9 +1,8 @@
 package com.kjk.web.service;
 
 import com.kjk.web.Repository.UserRepository;
-import com.kjk.web.Repository.UserRepositoryCustomImpl;
 import com.kjk.web.config.CustomUserDetail;
-import com.kjk.web.model.User;
+import com.kjk.web.model.user.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

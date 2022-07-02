@@ -1,7 +1,6 @@
 package com.kjk.web.controller.web;
 
-import com.kjk.web.Repository.UserRepository;
-import com.kjk.web.model.User;
+import com.kjk.web.model.user.User;
 import com.kjk.web.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;

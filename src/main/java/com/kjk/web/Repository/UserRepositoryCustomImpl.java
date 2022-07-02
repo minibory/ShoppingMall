@@ -1,31 +1,31 @@
 package com.kjk.web.Repository;
 
-import static com.kjk.web.model.QUser.user;
-
-import com.kjk.web.model.User;
+import com.kjk.web.model.user.User;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Repository;
 import org.thymeleaf.util.StringUtils;
 
 import java.util.List;
 
+import static com.kjk.web.model.user.QUser.user;
+
 @RequiredArgsConstructor
-public class UserRepositoryCustomImpl implements UserRepositoryCustom{
+public class UserRepositoryCustomImpl implements UserRepositoryCustom {
     private final JPAQueryFactory jpaQueryFactory;
 
-//    public List<User> findById(String loginId) {
-//        return jpaQueryFactory
-//                .selectFrom(user)
-//                .where(eqLoginId(loginId))
-//                .fetch();
-//    }
-//
-//    private BooleanExpression eqLoginId(String loginId) {
-//        if(StringUtils.isEmpty(loginId)) {
-//            return null;
-//        }
-//        return user.loginId.eq(loginId);
-//    }
+    @Override
+    public List<User> findByUsername(String username) {
+        return jpaQueryFactory
+                .selectFrom(user)
+                .where(eqUsername(username))
+                .fetch();
+    }
+
+    private BooleanExpression eqUsername(String username) {
+        if(StringUtils.isEmpty(username)) {
+            return null;
+        }
+        return user.username.eq(username);
+    }
 }

@@ -1,5 +1,7 @@
-package com.kjk.web.model;
+package com.kjk.web.model.user;
 
+import com.kjk.web.model.role.Role;
+import com.kjk.web.model.product.Product;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -7,7 +9,6 @@ import lombok.Setter;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 @Entity

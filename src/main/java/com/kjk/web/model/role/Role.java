@@ -1,6 +1,7 @@
-package com.kjk.web.model;
+package com.kjk.web.model.role;
 
 import com.kjk.web.model.generic.BaseEntity;
+import com.kjk.web.model.user.User;
 import com.kjk.web.type.UserRoleType;
 import lombok.Getter;
 import lombok.Setter;

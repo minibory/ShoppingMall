@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <script src="js/jquery-3.6.0.min.js" xmlns:sec="http://www.w3.org/1999/xhtml"></script>
 <script src="js/jquery-ui.min.js"></script>
+<script src="js/ajax.js"></script>
+<script src="js/jquery.validate.js"></script>
 <link rel="stylesheet" href="css/index.css">
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">>
@@ -31,7 +33,7 @@
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                                 <li><a class="dropdown-item" href="/">All Products</a></li>
                                 <li><hr class="dropdown-divider" /></li>
-                                <li><a class="dropdown-item" href="#!">Sale</a></li>
+                                <li><a class="dropdown-item" th:onclick="getProductList('sale')">Sale</a></li>
                             </ul>
                         </li>
                     </ul>
@@ -64,7 +66,7 @@
                     window.location = "/logout";
                 });
                 $("#myProducts").click(function () {
-                    window.location = "/menu/product/my";
+                    getProductList('my');
                 });
             }
         </script>

@@ -42,16 +42,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //                .successHandler(new AuthenticationSuccessHandler())
                 .failureHandler(new AuthenticationFailureHandler())
                 .permitAll();
-
-//        http.mvcMatcher("/**")
-//                .formLogin()
-//                .usernameParameter("myUsername")
-//                .passwordParameter("myPassword")
-//                .successHandler(new AuthenticationSuccessHandler())
-//                .failureHandler(new AuthenticationFailureHandler())
-//            .and()
-//                .authorizeRequests()
-//                .mvcMatchers("/**").hasRole("USER");
     }
 
     @Override

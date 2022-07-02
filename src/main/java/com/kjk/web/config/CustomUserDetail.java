@@ -1,6 +1,6 @@
 package com.kjk.web.config;
 
-import com.kjk.web.model.User;
+import com.kjk.web.model.user.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;

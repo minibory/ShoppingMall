@@ -1,5 +1,6 @@
-package com.kjk.web.model;
+package com.kjk.web.model.product;
 
+import com.kjk.web.model.user.User;
 import com.kjk.web.model.generic.BaseEntity;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

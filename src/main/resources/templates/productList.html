@@ -1,69 +1,89 @@
 <!DOCTYPE html>
-<script src="js/jquery-3.6.0.min.js"></script>
+<script src="js/jquery-3.6.0.min.js" xmlns:sec="http://www.w3.org/1999/xhtml"></script>
 <script src="js/jquery-ui.min.js"></script>
+<script src="js/ajax.js"></script>
+<script src="js/jquery.validate.js"></script>
 <link rel="stylesheet" href="css/index.css">
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
-    <head th:replace="fragments/layout :: head('Shop Homepage')" />
-    <body>
-        <!-- Navigation-->
-        <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top" th:replace="fragments/layout :: menu('Shop')"/>
-        <!-- Header-->
-        <header class="bg-dark py-5">
-            <div class="container px-4 px-lg-5 my-5">
-                <div class="text-center text-white">
-                    <h1 class="display-4 fw-bolder">Just Shop</h1>
-                    <p class="lead fw-normal text-white-50 mb-0">We only sell simple items</p>
-                </div>
+<head th:replace="fragments/layout :: head('Shop Homepage')" />
+<body>
+    <!-- Navigation-->
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top" th:replace="fragments/layout :: menu('Shop')"/>
+    <!-- Header-->
+    <header class="bg-dark py-5">
+        <div class="container px-4 px-lg-5 my-5">
+            <div class="text-center text-white">
+                <h1 class="display-4 fw-bolder">Just Shop</h1>
+                <p class="lead fw-normal text-white-50 mb-0">We only sell simple items</p>
             </div>
-        </header>
-        <!-- Section-->
-        <section class="py-5">
-            <div class="container px-4 px-lg-5 mt-5">
-                <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
-                    <div class="col mb-5">
-                        <div class="card h-100">
-                            <!-- Sale badge-->
-                            <div class="badge bg-dark text-white position-absolute" style="top: 0.5rem; right: 0.5rem">Sale</div>
-                            <!-- Product image-->
-                            <img class="card-img-top" src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" alt="..." />
-                            <!-- Product details-->
-                            <div class="card-body p-4">
-                                <div class="text-center">
-                                    <!-- Product name-->
-                                    <h5 class="fw-bolder">Sale Item</h5>
-                                    <!-- Product price-->
-                                    <span class="text-muted text-decoration-line-through">$50.00</span>
-                                    $25.00
-                                </div>
-                            </div>
-                            <!-- Product actions-->
-                            <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                                <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#">Add to cart</a></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col mb-5">
-                        <div class="card h-100">
-                            <!-- Product image-->
-                            <img class="card-img-top" src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" alt="..." />
-                            <!-- Product details-->
-                            <div class="card-body p-4">
-                                <div class="text-center">
-                                    <!-- Product name-->
-                                    <h5 class="fw-bolder">Popular Item</h5>
-                                    <!-- Product price-->
-                                    $40.00
-                                </div>
-                            </div>
-                            <!-- Product actions-->
-                            <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                                <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#">Add to cart</a></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+        </div>
+    </header>
+    <!-- Section-->
+    <section class="py-5">
+        <div class="container px-4 px-lg-5 mt-5">
+            <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center" id="productList">
+
+
             </div>
-        </section>
-    </body>
-    <footer th:replace="fragments/layout :: footer"/>
+        </div>
+    </section>
+</body>
+<footer th:replace="fragments/layout :: footer"/>
+<script th:inline="javascript">
+    $(document).ready(function () {
+        getProductList();
+    });
+
+    function getProductList(type) {
+        $('#productList').html('');
+        var params = "";
+        if(type == 'sale') {
+            params.productSaleYn = 1;
+        } else if(type == 'my') {
+            // 로그인 ID 가져와서 세팅.
+            params.username = "";
+        }
+        ajaxCall('/product-management/products', params, function (data) {
+            if(data.resultCd === "1" && data.data.length > 0) {
+                var html = "";
+                for(var i = 0 ; i < data.data.length; i++) {
+                    if (data.data.productSaleYn === "1") {
+                        html += '<div class="col mb-5">';
+                        html += '    <div class="card h-100">';
+                        html += '       <div class="badge bg-dark text-white position-absolute" style="top: 0.5rem; right: 0.5rem">Sale</div>';
+                        html += '       <img class="card-img-top" src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" alt="..."/>';
+                        html += '       <div class="card-body p-4">';
+                        html += '           <div class="text-center">';
+                        html += '               <h5 class="fw-bolder">' + data.data.productName + '</h5>';
+                        html += '               <span class="text-muted text-decoration-line-through">' + data.data.productPrice + '</span>' + data.data.productSalePrice;
+                        html += '           </div>';
+                        html += '       </div>';
+                        html += '       <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">';
+                        html += '           <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#">Add to cart</a></div>';
+                        html += '       </div>';
+                        html += '    </div>';
+                        html += '</div>';
+                    } else {
+                        html += '<div class="col mb-5">';
+                        html += '    <div class="card h-100">';
+                        html += '       <img class="card-img-top" src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" alt="..."/>';
+                        html += '        <div class="card-body p-4">';
+                        html += '            <div class="text-center">';
+                        html += '                <h5 class="fw-bolder">' + data.data.productName + '</h5>' + data.data.productPrice;
+                        html += '            </div>';
+                        html += '        </div>';
+                        html += '        <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">';
+                        html += '            <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#">Add to cart</a></div>';
+                        html += '        </div>';
+                        html += '    </div>';
+                        html += '</div>';
+                    }
+                }
+                $('#productList').html(html);
+            } else {
+                $('#productList').html("<h2>등록된 상품이 없습니다.</h2>");
+            }
+        });
+    }
+</script>
 </html>
