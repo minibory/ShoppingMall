@@ -28,5 +28,8 @@ spring:
     cache: false
     prefix: file:src/main/resources/templates/
 
+  main:
+    allow-bean-definition-overriding: true
+
 logging.level:
   org.hibernate.SQL: debug

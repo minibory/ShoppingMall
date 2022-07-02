@@ -21,7 +21,8 @@ var ajaxCall = function (url, param, successCallback, failCallback) {
         contentType : contentType,
         data : dataParam,
         dataType : dataType,
-        beforeSend : function () {
+        beforeSend : function (xmlHttpRequest) {
+            xmlHttpRequest.setRequestHeader("ajax", "true");
         },
         success : function (data) {
             try {
@@ -34,7 +35,7 @@ var ajaxCall = function (url, param, successCallback, failCallback) {
                 alert("ajaxCall Error: " + e.message);
             }
         },
-        error : function (error) {
+        error : function (xhr, status, error) {
             alert("Server Response Error: " + error);
         }
     });
@@ -52,16 +53,17 @@ var ajaxPostCall = function (url, param, successCallback, failCallback) {
     } else if(typeof param == "object") {
         dataParam = JSON.stringify(param);
     } else {
-        $.alert("ajaxCall Type Error");
+        alert("ajaxCall Type Error");
     }
 
     $.ajax({
         type : 'POST',
         url : url,
         contentType : contentType,
-        data : dataParam,
+        data : JSON.stringify(dataParam),
         dataType : dataType,
-        beforeSend : function () {
+        beforeSend : function (xmlHttpRequest) {
+            xmlHttpRequest.setRequestHeader("ajax", "true");
         },
         success : function (data) {
             try {
@@ -71,11 +73,11 @@ var ajaxPostCall = function (url, param, successCallback, failCallback) {
                     }
                 }
             } catch (e) {
-                $.alert("ajaxCall Error: " + e.message);
+                alert("ajaxCall Error: " + e.message);
             }
         },
-        error : function (error) {
-            $.alert("Server Response Error: " + error);
+        error : function (xhr, status, error) {
+            alert("Server Response Error: " + error);
         }
     });
 };
@@ -120,3 +122,13 @@ var ajaxSyncCall = function (url, param, successCallback, failCallback) {
         }
     });
 };
+
+function showLoading() {
+    $('.page-load').show();
+}
+
+function hideLoading() {
+    setTimeout(function () {
+        $('.page-load').hide();
+    }, 400);
+}

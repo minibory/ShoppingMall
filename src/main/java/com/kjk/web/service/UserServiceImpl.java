@@ -21,4 +21,9 @@ public class UserServiceImpl implements UserService {
         user.setRole(new Role());
         userRepository.save(user);
     }
+
+    @Override
+    public Boolean usernameValidate(String username) {
+        return (userRepository.usernameValidate(username) == 0);
+    }
 }

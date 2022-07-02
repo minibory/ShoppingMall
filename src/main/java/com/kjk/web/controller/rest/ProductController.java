@@ -6,7 +6,6 @@ import com.kjk.web.model.product.ProductVO;
 import com.kjk.web.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -19,7 +18,7 @@ public class ProductController {
     private final ProductService productService;
 
     @GetMapping
-    public ResultEntity<List<Product>> getProductList(@RequestBody ProductVO productVO) {
+    public ResultEntity<List<Product>> getProductList(ProductVO productVO) {
 
         List<Product> productList = productService.getProductList(productVO);
 

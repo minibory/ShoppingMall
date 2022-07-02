@@ -3,9 +3,14 @@ package com.kjk.web.controller.web;
 import com.kjk.web.model.user.User;
 import com.kjk.web.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+
+import java.io.IOException;
 
 @Controller
 @RequiredArgsConstructor
@@ -13,32 +18,43 @@ public class LoginWebController {
 
     private final UserService userService;
 
-    // 로그인 페이지
-    @GetMapping("/login")
-    public String login() {
-        // 로그인 여부 체크 후 로그인 상태면 productList
-        if(false) {
-            return "redirect:/menu/product";
+
+    /**
+     * 로그인 페이지로 이동
+     */
+    @GetMapping("/login-form")
+    public String loginForm() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if(!(auth instanceof AnonymousAuthenticationToken)) {
+            return "redirect:/";
         }
         return "account/login";
     }
-
+    
+    /**
+     * 회원가입 페이지로 이동
+     */
     // 회원가입 페이지
-    @GetMapping("/join")
-    public String join() {
+    @GetMapping("/join-form")
+    public String joinForm() {
         return "account/join";
     }
 
+    /**
+     * 가입 성공
+     */
     @PostMapping("/join")
-    public String register(User user) {
+    public String register(User user) throws IOException {
         userService.save(user);
-        return"redirect:/";
+
+        return "handler/joinSuccess";
     }
 
-    // 로그아웃
-    @PostMapping("/logout")
-    public String logout() {
-        // 세션 만료
-        return "account/login";
+    /**
+     * 로그인 실패
+     */
+    @PostMapping("/login-fail")
+    public String loginFail() {
+        return "handler/loginFail";
     }
 }

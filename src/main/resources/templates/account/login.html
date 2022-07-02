@@ -1,8 +1,15 @@
 <!DOCTYPE html>
+<script src="js/jquery-3.6.0.min.js" xmlns:sec="http://www.w3.org/1999/xhtml"></script>
+<script src="js/jquery-ui.js"></script>
+<script src="js/common.js"></script>
+<script src="js/jquery.validate.js"></script>
 <link rel="stylesheet" href="css/login.css">
 <!------ Include the above in your HEAD tag ---------->
-<html lang="ko">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <body>
+<div class="home-icon">
+    <a href="/">Home</a>
+</div>
 <div class="wrapper">
     <div id="formContent">
         <!-- Title -->
@@ -12,16 +19,39 @@
         <!-- Login Form -->
         <form method="post" id="loginForm" th:action="@{/login}">
             <input type="text" name="username" placeholder="아이디">
-            <input type="text" name="password" placeholder="비밀번호">
+            <input type="password" name="password" placeholder="비밀번호">
             <input type="submit" value="Login">
         </form>
 
         <!-- Remind Passowrd -->
         <div id="formFooter">
-            Not registered? <a class="join-label" th:href="@{/join}" th:text="|Create an account|">Create an account</a>
+            Not registered? <a class="join-label" th:href="@{/join-form}" th:text="|Create an account|">Create an account</a>
         </div>
-
     </div>
 </div>
 </body>
+<script th:inline="javascript">
+
+    $(document).ready(function () {
+        initSetting();
+    });
+
+    function initSetting() {
+        $('#loginForm').submit(function (e) {
+            var username = $(this).find('input[name="username"]');
+            var password = $(this).find('input[name="password"]');
+            if(username.val() == null || username.val() === '' || username.val() === 'undefined' || username.val().length < 6) {
+                alert("아이디를 6자 이상 입력해주세요.");
+                username.focus();
+                return false;
+            }
+
+            if(password.val() == null || password.val() === '' || password.val() === 'undefined' || password.val().length < 8) {
+                alert("비밀번호를 8자 이상 입력해주세요.");
+                password.focus();
+                return false;
+            }
+        });
+    }
+</script>
 </html>

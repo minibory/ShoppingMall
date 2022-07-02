@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <script src="js/jquery-3.6.0.min.js" xmlns:sec="http://www.w3.org/1999/xhtml"></script>
-<script src="js/jquery-ui.min.js"></script>
-<script src="js/ajax.js"></script>
+<script src="js/jquery-ui.js"></script>
+<script src="js/common.js"></script>
 <script src="js/jquery.validate.js"></script>
 <link rel="stylesheet" href="css/index.css">
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
-<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
     <head th:fragment="head(title)">
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
@@ -33,20 +33,18 @@
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                                 <li><a class="dropdown-item" href="/">All Products</a></li>
                                 <li><hr class="dropdown-divider" /></li>
-                                <li><a class="dropdown-item" th:onclick="getProductList('sale')">Sale</a></li>
+                                <li><a class="dropdown-item" href="/sale">Sale</a></li>
                             </ul>
                         </li>
                     </ul>
                     <a style="color: rgba(0,0,0,0.9)" class="nav-item nav-link active" aria-current="page" id="logInBtn" sec:authorize="!isAuthenticated()" th:text="LogIn">LogIn</a>
                     <a style="color: rgba(0,0,0,0.9)" class="nav-item nav-link active" aria-current="page" id="logoutBtn" sec:authorize="isAuthenticated()" th:text="Logout">Logout</a>
-                    <a style="color: rgba(0,0,0,0.9)" class="nav-item nav-link active" aria-current="page" id="myProducts">My Products</a>
-                    <form class="d-flex">
-                        <button class="btn btn-outline-dark" type="submit">
-                            <i class="bi-cart-fill me-1"></i>
-                            Cart
-                            <span class="badge bg-dark text-white ms-1 rounded-pill">0</span>
+                    <a style="color: rgba(0,0,0,0.9)" sec:authorize="isAuthenticated()" class="nav-item nav-link active" aria-current="page" href="/my">My Products</a>
+                    <div class="d-flex">
+                        <button sec:authorize="isAuthenticated()" class="btn btn-outline-dark">
+                            Add Product
                         </button>
-                    </form>
+                    </div>
                 </div>
             </div>
             <!-- Bootstrap core JS-->
@@ -60,13 +58,10 @@
 
             function initSetting() {
                 $("#logInBtn").click(function () {
-                    window.location = "/login";
+                    window.location = "/login-form";
                 });
                 $("#logoutBtn").click(function () {
                     window.location = "/logout";
-                });
-                $("#myProducts").click(function () {
-                    getProductList('my');
                 });
             }
         </script>

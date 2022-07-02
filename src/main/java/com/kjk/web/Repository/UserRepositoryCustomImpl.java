@@ -22,6 +22,15 @@ public class UserRepositoryCustomImpl implements UserRepositoryCustom {
                 .fetch();
     }
 
+    @Override
+    public Long usernameValidate(String username) {
+        return jpaQueryFactory
+                .select(user.count())
+                .from(user)
+                .where(eqUsername(username))
+                .fetchOne();
+    }
+
     private BooleanExpression eqUsername(String username) {
         if(StringUtils.isEmpty(username)) {
             return null;

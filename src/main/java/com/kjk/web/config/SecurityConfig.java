@@ -1,7 +1,8 @@
 package com.kjk.web.config;
 
-import com.kjk.web.Handler.AuthenticationFailureHandler;
+import com.kjk.web.Handler.AuthenticationSuccessHandler;
 import com.kjk.web.security.CustomAuthenticationProvider;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -9,18 +10,16 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
 @EnableWebSecurity
+@RequiredArgsConstructor
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    CustomAuthenticationProvider customAuthenticationProvider;
-
-    public SecurityConfig(CustomAuthenticationProvider customAuthenticationProvider) {
-        this.customAuthenticationProvider = customAuthenticationProvider;
-    }
+    private final UserDetailsService userDetailsService;
 
     @Override
     public void configure(WebSecurity web) {
@@ -32,25 +31,52 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/", "/menu/product", "/menu/product/all", "/login", "/join").permitAll()
+                // nginx 띄우면 context path 처리 ("/" -> "/product")
+                .antMatchers("/").permitAll()
+                .antMatchers("/sale").permitAll()
+//                .antMatchers("/product").permitAll()
+//                .antMatchers("/product/sale").permitAll()
+                .antMatchers("/join").permitAll()
+                .antMatchers("/login").permitAll()
+                .antMatchers("/login-form").permitAll()
+                .antMatchers("/join-form").permitAll()
+                .antMatchers("/product-management/**").permitAll()
+                .antMatchers("/user-management/**").permitAll()
                 .anyRequest().authenticated()
+
                 .and()
                 .formLogin()
                 .loginPage("/login")
-                //로그인 후 기본화면으로 돌아가기. successHandler 주석필요
-                .defaultSuccessUrl("/")
-//                .successHandler(new AuthenticationSuccessHandler())
-                .failureHandler(new AuthenticationFailureHandler())
+//                .defaultSuccessUrl("/")     // SuccessHandler 내부에서 "/"로 redirect
+                .successHandler(authenticationSuccessHandler())
+                .failureForwardUrl("/login-fail")
+                .permitAll()
+
+                .and()
+                .logout()
+                .logoutUrl("/logout")
+                .deleteCookies("JSESSIONID")
+                .logoutSuccessUrl("/")
                 .permitAll();
     }
 
     @Override
     public void configure(AuthenticationManagerBuilder auth) {
-        auth.authenticationProvider(customAuthenticationProvider);
+        auth.authenticationProvider(customAuthenticationProvider());
+    }
+
+    @Bean
+    public CustomAuthenticationProvider customAuthenticationProvider() {
+        return new CustomAuthenticationProvider(userDetailsService, passwordEncoder());
     }
 
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
+    }
+
+    @Bean
+    public AuthenticationSuccessHandler authenticationSuccessHandler() {
+        return new AuthenticationSuccessHandler();
     }
 }

@@ -1,11 +1,11 @@
 package com.kjk.web.type;
 
-public enum UserRoleType implements EnumModel{
+public enum UserRoleType implements EnumModel {
     USER("ROLE_USER"),
     ADMIN("ROLE_ADMIN"),
     ;
 
-    private String value;
+    private final String value;
 
     UserRoleType(String value) {
         this.value = value;

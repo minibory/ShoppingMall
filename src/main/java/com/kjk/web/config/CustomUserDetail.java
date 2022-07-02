@@ -1,6 +1,7 @@
 package com.kjk.web.config;
 
 import com.kjk.web.model.user.User;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -9,13 +10,11 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+@RequiredArgsConstructor
 public class CustomUserDetail implements UserDetails {
     private static final long serialVersionUID = -1696163413845167163L;
-    private User user;
+    private final User user;
 
-    public CustomUserDetail(User user) {
-        this.user = user;
-    }
     /*
      * 권한목록
      */

@@ -1,8 +1,14 @@
 <!DOCTYPE html>
+<script src="js/jquery-3.6.0.min.js" xmlns:sec="http://www.w3.org/1999/xhtml"></script>
+<script src="js/jquery-ui.js"></script>
+<script src="js/common.js"></script>
+<script src="js/jquery.validate.js"></script>
 <link rel="stylesheet" href="css/join.css">
-<!------ Include the above in your HEAD tag ---------->
-<html lang="ko">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <body>
+<div class="home-icon">
+    <a href="/">Home</a>
+</div>
 <div class="wrapper">
     <div id="formContent">
         <!-- Title -->
@@ -10,24 +16,94 @@
             <h2>Join</h2>
         </div>
         <!-- Join Form -->
-        <form method="post" th:action="@{/join}">
-            <div class="input-label">이름</div>
-            <input type="text" id="username" name="nickname">
-            <div class="input-label">아이디</div>
-            <input type="text" id="id" name="username">
-            <div class="input-label">비밀번호</div>
-            <input type="text" id="password" name="password">
-            <div class="input-label">비밀번호 확인</div>
-            <input type="text" id="rePassword" name="rePassword">
+        <form method="post" id="joinForm" th:action="@{/join}">
+            <div class="input-label">이름*</div>
+            <input type="text" name="nickname">
+            <div class="input-label">아이디* <span class="username-label" id="useYn"></span></div>
+            <input type="text" name="username" placeholder="영소문자/숫자 6자 이상">
+            <div class="input-label">비밀번호*</div>
+            <input type="password" name="password" placeholder="8자 이상">
+            <div class="input-label">비밀번호 확인*</div>
+            <input type="password" id="rePassword">
+            <div class="input-label">주소</div>
+            <input type="text" name="address">
+            <div class="input-label">전화번호</div>
+            <input type="text" name="telNo" placeholder="(-) 생략">
             <input type="submit" value="Join">
         </form>
 
         <!-- Remind Passowrd -->
         <div id="formFooter">
-            Already have an account? <a class="login-label" th:href="@{/login}">Sign In</a>
+            Already have an account? <a class="login-label" th:href="@{/login-form}">Sign In</a>
         </div>
 
     </div>
 </div>
 </body>
+<script th:inline="javascript">
+
+    var isUsernameValid = false;
+
+    $(document).ready(function () {
+        initSetting();
+    });
+
+    function initSetting() {
+        $('#joinForm').find('input[name="username"]').on('input', function () {
+            if($(this).val().length < 6) {
+                isUsernameValid = false;
+                $('#useYn').html("");
+                return;
+            }
+            var inputText = $(this).val();
+
+            var params = {
+                'username': inputText
+            };
+
+            ajaxCall('/user-management/users/validation', params, function (data) {
+                console.log(data);
+                if(data.resultCd === "1") {
+                    $('#useYn').css("color", "blueviolet");
+                    $('#useYn').html("사용 가능한 아이디입니다.");
+                    isUsernameValid = true;
+                } else {
+                    $('#useYn').css("color", "red");
+                    $('#useYn').html("이미 사용중인 아이디입니다.");
+                    isUsernameValid = false;
+                }
+            });
+        });
+
+        $('#joinForm').submit(function (e) {
+            var username = $(this).find('input[name="username"]');
+            var nickname = $(this).find('input[name="nickname"]');
+            var password = $(this).find('input[name="password"]');
+            var rePassword = $(this).find('input[id="rePassword"]');
+            if(nickname.val() == null || nickname.val() === '' || nickname.val() === 'undefined' || nickname.val().length < 2) {
+                alert("이름을 입력해주세요.");
+                nickname.focus();
+                return false;
+            }
+
+            if(!isUsernameValid) {
+                alert("아이디를 확인해주세요.");
+                username.focus();
+                return false;
+            }
+
+            if(password.val() == null || password.val() === '' || password.val() === 'undefined' || password.val().length < 8) {
+                alert("비밀번호를 입력해주세요.");
+                password.focus();
+                return false;
+            }
+
+            if(rePassword.val() !== password.val()) {
+                alert("비밀번호가 일치하지 않습니다." + rePassword.val() + password.val());
+                rePassword.focus();
+                return false;
+            }
+        });
+    }
+</script>
 </html>

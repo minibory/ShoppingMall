@@ -26,10 +26,11 @@ public class ProductRepositoryCustomImpl implements ProductRepositoryCustom {
     }
 
     private BooleanExpression eqProductSaleYn(boolean productSaleYn) {
-        if(ObjectUtils.isEmpty(productSaleYn)) {
+        if(productSaleYn) {
+            return product.productSaleYn.eq(productSaleYn);
+        } else {
             return null;
         }
-        return product.productSaleYn.eq(productSaleYn);
     }
 
     private BooleanExpression eqUsername(String username) {
