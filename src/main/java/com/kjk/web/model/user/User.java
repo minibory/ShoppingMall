@@ -1,12 +1,16 @@
 package com.kjk.web.model.user;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.kjk.web.model.generic.BaseEntity;
 import com.kjk.web.model.role.Role;
 import com.kjk.web.model.product.Product;
+import com.kjk.web.type.UserRoleType;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import javax.transaction.Transactional;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,13 +21,9 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
-public class User implements Serializable {
+@Transactional
+public class User extends BaseEntity implements Serializable {
     private static final long serialVersionUID = -6829693587200493915L;
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "USER_ID")
-    private Long Id;
 
     @Column(length = 100, unique = true, nullable = false)
     private String username;
@@ -46,11 +46,17 @@ public class User implements Serializable {
 //    @Transient
 //    private String auth;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @OneToOne
     @JoinTable(
             name = "tbl_user_role",
             joinColumns = @JoinColumn(name = "USER_ID"),
             inverseJoinColumns = @JoinColumn(name = "ROLE_ID"))
-    private Role role = new Role();
+    private Role role;
 
+    @OneToMany(fetch = FetchType.LAZY)
+    @JoinTable(
+            name = "tbl_user_product",
+            joinColumns = @JoinColumn(name = "USER_ID"),
+            inverseJoinColumns = @JoinColumn(name = "PRODUCT_ID"))
+    private List<Product> products = new ArrayList<>();
 }

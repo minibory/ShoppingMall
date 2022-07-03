@@ -49,6 +49,7 @@
             params.username = $('#username').text();
         }
         ajaxCall('/product-management/products', params, function (data) {
+            console.log("data : ",data);
             if(data.resultCd === "1" && data.data.length > 0) {
                 var html = "";
                 for(var i = 0 ; i < data.data.length; i++) {

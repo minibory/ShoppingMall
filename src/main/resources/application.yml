@@ -8,13 +8,13 @@ spring:
     driver-class-name: org.mariadb.jdbc.Driver
   # jpa 설정
   jpa:
-    database: mysql
     hibernate:
       ddl-auto: update
     properties:
       hibernate:
         format_sql: true
     show-sql: true
+    defer-datasource-initialization: true
 
   # devtools 설정
   devtools:
@@ -30,6 +30,12 @@ spring:
 
   main:
     allow-bean-definition-overriding: true
+# sql스크립트 인입시
+#  sql:
+#    init:
+#      schema-locations: classpath:db/data.sql
+#      mode: always
+#      encoding: utf-8
 
 logging.level:
   org.hibernate.SQL: debug

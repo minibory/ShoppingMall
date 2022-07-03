@@ -53,10 +53,10 @@ public class ProductWebController {
     public String addProduct(Product product, Authentication authentication) {
         // username으로 User가져와서 Product에 set할 예정
         // 화면단에서 productImg가 넘어오는 지! (나머지는 굳)
-//        User user = userService.findByUsername(username).get(0);
-//
-//        product.setUser(user);
-//        productService.save(product);
+        User user = userService.findByUsername(authentication.getName()).get(0);
+
+        product.setUser(user);
+        productService.save(product);
 
         return "handler/product/addSuccess";
     }

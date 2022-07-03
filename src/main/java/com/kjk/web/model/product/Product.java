@@ -1,6 +1,8 @@
 package com.kjk.web.model.product;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.kjk.web.model.generic.BaseEntity;
+import com.kjk.web.model.role.Role;
 import com.kjk.web.model.user.User;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -46,6 +48,7 @@ public class Product extends BaseEntity {
     private int productSalePrice;
 
     // 상품 소유자
-    @OneToOne
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnore
     private User user;
 }
