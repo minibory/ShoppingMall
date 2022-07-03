@@ -14,7 +14,7 @@ public class UserController {
     private final UserService userService;
 
     @GetMapping("/validation")
-    public ResultEntity getProductList(String username) {
+    public ResultEntity usernameValidate(String username) {
         if(userService.usernameValidate(username)) {
             return new ResultEntity<>("1");
         }

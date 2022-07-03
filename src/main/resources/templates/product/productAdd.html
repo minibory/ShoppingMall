@@ -24,17 +24,17 @@
             <input type="text" name="productStock">
             <div class="input-label" style="display: block; margin-top: 10px; margin-bottom: 10px; line-height: 0px;">상품 설명</div>
             <textarea id="productContents" name="productContents"></textarea>
-            <div class="input-label">상세 이미지</div>
-            <div style="height: 200px">
-                <input type="file" id="productImg" accept="image/*" name="productImg" multiple>
-                <div id="imgViewArea" style="margin-top: 10px; display:none;">
-                    <img id="preview" style="width: 350px; height: 260px;"/>
-                </div>
-            </div>
+<!--            <div class="input-label">상세 이미지</div>-->
+<!--            <div style="height: 200px">-->
+<!--                <input type="file" id="productImg" accept="image/*" name="productImg" multiple>-->
+<!--                <div id="imgViewArea" style="margin-top: 10px; display:none;">-->
+<!--                    <img id="preview" style="width: 350px; height: 260px;"/>-->
+<!--                </div>-->
+<!--            </div>-->
             <div class="input-label">할인</div>
             <div class="toggle-radio">
-                <input type="radio" name="productSaleYn" id="yes" th:value="Y">
-                <input type="radio" name="productSaleYn" id="no" th:value="N" checked>
+                <input type="radio" name="productSaleYn" id="yes" th:value="true">
+                <input type="radio" name="productSaleYn" id="no" th:value="false" checked>
                 <div class="switch">
                     <label for="yes">Yes</label>
                     <label for="no">No</label>
@@ -47,7 +47,6 @@
         </form>
     </div>
 </div>
-<div id="username" sec:authentication="name"></div>
 </body>
 <script th:inline="javascript">
 
@@ -88,17 +87,19 @@
                 return false;
             }
 
-            if(productSaleYn.val() === 'Y' && (productSalePrice.val() === '0' || productSalePrice.val() === '' || productSalePrice.val() == null || productSalePrice.val() === 'undefined')) {
+            if(productSaleYn.val() === 'true' && (productSalePrice.val() === '0' || productSalePrice.val() === '' || productSalePrice.val() == null || productSalePrice.val() === 'undefined')) {
                 alert("할인가를 입력해주세요.");
                 productSalePrice.focus();
                 return false;
             }
 
-            if(productSaleYn.val() === 'Y') {
-                productSalePrice.val('');
+            if(productSaleYn.val() === 'false') {
+                productSalePrice.val('0');
             }
             productPrice.val(productPrice.val().replace(",", ""));
-            productSalePrice.val(productSalePrice.val().replace(",", ""));
+            if(productSalePrice.val() !== '' || productSalePrice.val() !== null || productSalePrice.val() !== 'undifined') {
+                productSalePrice.val(productSalePrice.val().replace(",", ""));
+            }
         });
 
         $(":input[name='productImg']").change(function() {
