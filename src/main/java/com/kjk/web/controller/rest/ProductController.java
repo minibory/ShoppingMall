@@ -1,5 +1,6 @@
 package com.kjk.web.controller.rest;
 
+import com.google.gson.Gson;
 import com.kjk.web.model.generic.ResultEntity;
 import com.kjk.web.model.product.Product;
 import com.kjk.web.model.product.ProductVO;
@@ -18,9 +19,15 @@ public class ProductController {
     private final ProductService productService;
 
     @GetMapping
-    public ResultEntity<List<Product>> getProductList(ProductVO productVO) {
+    public ResultEntity getProductList(ProductVO productVO) {
 
         List<Product> productList = productService.getProductList(productVO);
+
+        if(productList == null) {
+            return new ResultEntity<>("0");
+        }
+
+        productList.stream().forEach(product -> product.setUser(null));
 
         return new ResultEntity<>("1", productList);
     }

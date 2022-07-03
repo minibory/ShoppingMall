@@ -52,15 +52,17 @@
             if(data.resultCd === "1" && data.data.length > 0) {
                 var html = "";
                 for(var i = 0 ; i < data.data.length; i++) {
-                    if (data.data.productSaleYn === "1") {
+                    var price = data.data[i].productPrice.toString().replace(/^0/, '').replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                    if (data.data[i].productSaleYn === "1") {
+                        var salePrice = data.data[i].productSalePrice.toString().replace(/^0/, '').replace(/\B(?=(\d{3})+(?!\d))/g, ",");
                         html += '<div class="col mb-5">';
                         html += '    <div class="card h-100">';
                         html += '       <div class="badge bg-dark text-white position-absolute" style="top: 0.5rem; right: 0.5rem">Sale</div>';
                         html += '       <img class="card-img-top" src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" alt="..."/>';
                         html += '       <div class="card-body p-4">';
                         html += '           <div class="text-center">';
-                        html += '               <h5 class="fw-bolder">' + data.data.productName + '</h5>';
-                        html += '               <span class="text-muted text-decoration-line-through">' + data.data.productPrice + '</span>' + data.data.productSalePrice;
+                        html += '               <h5 class="fw-bolder">' + data.data[i].productName + '</h5>';
+                        html += '               <span class="text-muted text-decoration-line-through">' + price + '</span>' + salePrice;
                         html += '           </div>';
                         html += '       </div>';
                         html += '       <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">';
@@ -74,7 +76,7 @@
                         html += '       <img class="card-img-top" src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" alt="..."/>';
                         html += '        <div class="card-body p-4">';
                         html += '            <div class="text-center">';
-                        html += '                <h5 class="fw-bolder">' + data.data.productName + '</h5>' + data.data.productPrice;
+                        html += '                <h5 class="fw-bolder">' + data.data[i].productName + '</h5>' + price;
                         html += '            </div>';
                         html += '        </div>';
                         html += '        <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">';

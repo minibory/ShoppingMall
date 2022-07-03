@@ -5,9 +5,11 @@ import com.kjk.web.model.user.User;
 import com.kjk.web.service.ProductService;
 import com.kjk.web.service.UserService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
@@ -50,13 +52,13 @@ public class ProductWebController {
     }
 
     @PostMapping("/add")
-    public String addProduct(Product product, Authentication authentication) {
-        // username으로 User가져와서 Product에 set할 예정
-        // 화면단에서 productImg가 넘어오는 지! (나머지는 굳)
-//        User user = userService.findByUsername(username).get(0);
-//
-//        product.setUser(user);
-//        productService.save(product);
+    public String addProduct(Product product) {
+
+        String username = SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString();
+        User user = userService.findByUsername(username).get(0);
+
+        product.setUser(user);
+        productService.save(product);
 
         return "handler/product/addSuccess";
     }
