@@ -5,6 +5,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
+
 public class ProductVO {
 
     // 상품 세일 유무

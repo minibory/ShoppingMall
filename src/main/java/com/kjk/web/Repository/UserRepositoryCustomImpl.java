@@ -44,7 +44,7 @@ public class UserRepositoryCustomImpl implements UserRepositoryCustom {
     @Override
     public Long getUserId(String username) {
         return jpaQueryFactory
-                .select(user.Id)
+                .select(user.id)
                 .from(user)
                 .where(eqUsername(username))
                 .fetchOne();

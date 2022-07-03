@@ -1,6 +1,5 @@
 package com.kjk.web.controller.rest;
 
-import com.google.gson.Gson;
 import com.kjk.web.model.generic.ResultEntity;
 import com.kjk.web.model.product.Product;
 import com.kjk.web.model.product.ProductVO;
