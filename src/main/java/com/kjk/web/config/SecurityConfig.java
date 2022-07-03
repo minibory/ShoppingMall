@@ -34,10 +34,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 // nginx 띄우면 context path 처리 ("/" -> "/product")
                 .antMatchers("/").permitAll()
                 .antMatchers("/sale").permitAll()
+                .antMatchers("/add").permitAll()
 //                .antMatchers("/product").permitAll()
 //                .antMatchers("/product/sale").permitAll()
+//                .antMatchers("/product/add").permitAll()
+                .antMatchers("/handler/**").permitAll()
                 .antMatchers("/join").permitAll()
-                .antMatchers("/login").permitAll()
                 .antMatchers("/login-form").permitAll()
                 .antMatchers("/join-form").permitAll()
                 .antMatchers("/product-management/**").permitAll()
@@ -47,14 +49,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .formLogin()
                 .loginPage("/login")
-//                .defaultSuccessUrl("/")     // SuccessHandler 내부에서 "/"로 redirect
                 .successHandler(authenticationSuccessHandler())
                 .failureForwardUrl("/login-fail")
                 .permitAll()
 
                 .and()
                 .logout()
-                .logoutUrl("/logout")
                 .deleteCookies("JSESSIONID")
                 .logoutSuccessUrl("/")
                 .permitAll();

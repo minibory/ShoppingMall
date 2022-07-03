@@ -8,4 +8,6 @@ import java.util.List;
 public interface ProductService {
 
     List<Product> getProductList(ProductVO productVO);
+
+    void save(Product user);
 }

@@ -14,6 +14,16 @@ import static com.kjk.web.model.user.QUser.user;
 public class UserRepositoryCustomImpl implements UserRepositoryCustom {
     private final JPAQueryFactory jpaQueryFactory;
 
+    /**
+     * username(로그인 ID) 비교
+     */
+    private BooleanExpression eqUsername(String username) {
+        if(StringUtils.isEmpty(username)) {
+            return null;
+        }
+        return user.username.eq(username);
+    }
+
     @Override
     public List<User> findByUsername(String username) {
         return jpaQueryFactory
@@ -31,10 +41,12 @@ public class UserRepositoryCustomImpl implements UserRepositoryCustom {
                 .fetchOne();
     }
 
-    private BooleanExpression eqUsername(String username) {
-        if(StringUtils.isEmpty(username)) {
-            return null;
-        }
-        return user.username.eq(username);
+    @Override
+    public Long getUserId(String username) {
+        return jpaQueryFactory
+                .select(user.Id)
+                .from(user)
+                .where(eqUsername(username))
+                .fetchOne();
     }
 }

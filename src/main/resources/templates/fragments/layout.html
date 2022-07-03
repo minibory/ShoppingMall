@@ -41,7 +41,7 @@
                     <a style="color: rgba(0,0,0,0.9)" class="nav-item nav-link active" aria-current="page" id="logoutBtn" sec:authorize="isAuthenticated()" th:text="Logout">Logout</a>
                     <a style="color: rgba(0,0,0,0.9)" sec:authorize="isAuthenticated()" class="nav-item nav-link active" aria-current="page" href="/my">My Products</a>
                     <div class="d-flex">
-                        <button sec:authorize="isAuthenticated()" class="btn btn-outline-dark">
+                        <button onclick="window.location.href='/add-form'" sec:authorize="isAuthenticated()" class="btn btn-outline-dark">
                             Add Product
                         </button>
                     </div>

@@ -43,9 +43,6 @@ public class User implements Serializable {
     @Column(length = 12)
     private String telNo;
 
-    @OneToMany
-    private List<Product> products = new ArrayList<>();
-
 //    @Transient
 //    private String auth;
 

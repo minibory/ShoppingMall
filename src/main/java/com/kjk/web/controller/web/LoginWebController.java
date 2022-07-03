@@ -18,7 +18,6 @@ public class LoginWebController {
 
     private final UserService userService;
 
-
     /**
      * 로그인 페이지로 이동
      */
@@ -37,6 +36,10 @@ public class LoginWebController {
     // 회원가입 페이지
     @GetMapping("/join-form")
     public String joinForm() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if(!(auth instanceof AnonymousAuthenticationToken)) {
+            return "redirect:/";
+        }
         return "account/join";
     }
 
@@ -47,7 +50,7 @@ public class LoginWebController {
     public String register(User user) throws IOException {
         userService.save(user);
 
-        return "handler/joinSuccess";
+        return "handler/user/joinSuccess";
     }
 
     /**
@@ -55,6 +58,6 @@ public class LoginWebController {
      */
     @PostMapping("/login-fail")
     public String loginFail() {
-        return "handler/loginFail";
+        return "handler/user/loginFail";
     }
 }

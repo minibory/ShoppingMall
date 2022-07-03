@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<script src="js/jquery-3.6.0.min.js" xmlns:sec="http://www.w3.org/1999/xhtml"></script>
+<script src="js/jquery-ui.js"></script>
+<script src="js/common.js"></script>
+<script src="js/jquery.validate.js"></script>
+<link rel="stylesheet" href="css/addProduct.css">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<body>
+<div class="home-icon">
+    <a href="/">Home</a>
+</div>
+<div class="wrapper">
+    <div id="formContent">
+        <!-- Title -->
+        <div class="title">
+            <h2>Add Products</h2>
+        </div>
+        <form method="post" id="productForm" action="/add">
+            <div class="input-label">상품명</div>
+            <input type="text" name="productName">
+            <div class="input-label">판매가</div>
+            <input type="text" name="productPrice" oninput="this.value = this.value.replace(/\D/g, '').replace(/(\..*)\./g, '$1');">
+            <div class="input-label">수량</div>
+            <input type="text" name="productStock">
+            <div class="input-label" style="display: block; margin-top: 10px; margin-bottom: 10px; line-height: 0px;">상품 설명</div>
+            <textarea id="productContents" name="productContents"></textarea>
+            <div class="input-label">상세 이미지</div>
+            <div style="height: 200px">
+                <input type="file" id="productImg" accept="image/*" name="productImg" multiple>
+                <div id="imgViewArea" style="margin-top: 10px; display:none;">
+                    <img id="preview" style="width: 350px; height: 260px;"/>
+                </div>
+            </div>
+            <div class="input-label">할인</div>
+            <div class="toggle-radio">
+                <input type="radio" name="productSaleYn" id="yes" th:value="Y">
+                <input type="radio" name="productSaleYn" id="no" th:value="N" checked>
+                <div class="switch">
+                    <label for="yes">Yes</label>
+                    <label for="no">No</label>
+                    <span></span>
+                </div>
+            </div>
+            <div class="input-label">할인가</div>
+            <input type="text" name="productSalePrice">
+            <input type="submit" value="Add">
+        </form>
+    </div>
+</div>
+<div id="username" sec:authentication="name"></div>
+</body>
+<script th:inline="javascript">
+
+    $(document).ready(function () {
+        initSetting();
+    });
+
+    function initSetting() {
+        $('#productForm').find('input[name="productPrice"]').on('blur', function () {
+            $(this).val(priceToString($(this).val()));
+        });
+
+        $('#productForm').find('input[name="productSalePrice"]').on('blur', function () {
+            $(this).val(priceToString($(this).val()));
+        });
+
+        $('#productForm').submit(function (e) {
+            var productName = $(this).find('input[name="productName"]');
+            var productPrice = $(this).find('input[name="productPrice"]');
+            var productStock = $(this).find('input[name="productStock"]');
+            var productSaleYn = $(this).find('input[name="productSaleYn"]:checked');
+            var productSalePrice = $(this).find('input[name="productSalePrice"]');
+            if(productName.val() == null || productName.val() === '' || productName.val() === 'undefined' || productName.val().length < 1) {
+                alert("상품명을 입력해주세요.");
+                productName.focus();
+                return false;
+            }
+
+            if(productPrice.val() == null || productPrice.val() === '' || productPrice.val() === 'undefined' || productPrice.val().length < 1) {
+                alert("판매가를 입력해주세요.");
+                productPrice.focus();
+                return false;
+            }
+
+            if(productStock.val() == null || productStock.val() === '' || productStock.val() === 'undefined' || productStock.val() === '0') {
+                alert("재고를 입력해주세요.");
+                productStock.focus();
+                return false;
+            }
+
+            if(productSaleYn.val() === 'Y' && (productSalePrice.val() === '0' || productSalePrice.val() === '' || productSalePrice.val() == null || productSalePrice.val() === 'undefined')) {
+                alert("할인가를 입력해주세요.");
+                productSalePrice.focus();
+                return false;
+            }
+
+            if(productSaleYn.val() === 'Y') {
+                productSalePrice.val('');
+            }
+            productPrice.val(productPrice.val().replace(",", ""));
+            productSalePrice.val(productSalePrice.val().replace(",", ""));
+        });
+
+        $(":input[name='productImg']").change(function() {
+            if( $(":input[name='productImg']").val() == '' ) {
+                $('#preview').attr('src' , '');
+            }
+            $('#imgViewArea').css({ 'display' : '' });
+            readURL(this);
+        });
+    }
+
+    function readURL(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+            reader.onload = function(e) {
+                $('#preview').attr('src', e.target.result);
+            }
+            reader.readAsDataURL(input.files[0]);
+        }
+        var imgName = $('input[name="productImg"]').val().split('\\');
+
+    }
+
+    function priceToString(price) {
+        return price.toString().replace(/^0/, '').replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    }
+</script>
+</html>

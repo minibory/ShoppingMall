@@ -9,4 +9,6 @@ public interface UserRepositoryCustom {
     List<User> findByUsername(String username);
 
     Long usernameValidate(String username);
+
+    Long getUserId(String username);
 }

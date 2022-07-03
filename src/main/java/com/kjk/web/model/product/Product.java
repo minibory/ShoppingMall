@@ -1,7 +1,7 @@
 package com.kjk.web.model.product;
 
-import com.kjk.web.model.user.User;
 import com.kjk.web.model.generic.BaseEntity;
+import com.kjk.web.model.user.User;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -21,19 +21,23 @@ public class Product extends BaseEntity {
     @Column(length = 100, unique = true, nullable = false)
     private String productName;
 
-    // 상품 재고
-    @Column
-    private int productStock;
-
     // 상품 정가
     @Column
     private int productPrice;
 
-    // 이미지주소
+    // 상품 재고
     @Column
+    private int productStock;
+
+    // 상품 내용
+    @Column(length = 1000)
+    private String productContents;
+
+    // 이미지주소
+    @Column(length = 1000)
     private String productImg;
 
-    // 상품 세일 유무
+    // 상품 할인 여부
     @Column(length = 1)
     private boolean productSaleYn = false;
 
@@ -42,7 +46,6 @@ public class Product extends BaseEntity {
     private int productSalePrice;
 
     // 상품 소유자
-    @ManyToOne
-    @JoinColumn(name = "user_id")
+    @OneToOne
     private User user;
 }
