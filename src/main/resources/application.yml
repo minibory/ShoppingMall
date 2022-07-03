@@ -31,11 +31,11 @@ spring:
   main:
     allow-bean-definition-overriding: true
 # sql스크립트 인입시
-#  sql:
-#    init:
-#      schema-locations: classpath:db/data.sql
-#      mode: always
-#      encoding: utf-8
+  sql:
+    init:
+      schema-locations: classpath:db/data.sql
+      mode: always
+      encoding: utf-8
 
 logging.level:
   org.hibernate.SQL: debug

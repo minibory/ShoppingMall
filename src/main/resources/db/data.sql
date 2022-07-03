@@ -33,6 +33,7 @@ create table if not exists tbl_product
         primary key,
     product_img        varchar(255) null,
     product_name       varchar(100) not null,
+    product_contents   varchar(1000)null,
     product_price      int          null,
     product_sale_price int          null,
     product_sale_yn    bit          null,
